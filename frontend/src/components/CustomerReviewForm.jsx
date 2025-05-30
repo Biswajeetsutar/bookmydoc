@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
+import { useContext } from "react";
+import { AppContext } from "../context/AppContext";
 
 const CustomerReviewForm = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const doctorName = queryParams.get("docid") || "";
+  const { backendUrl } = useContext(AppContext);
 
   const [formData, setFormData] = useState({
     name: doctorName,
@@ -30,7 +33,7 @@ const CustomerReviewForm = () => {
     setMessage({ type: "", text: "" });
 
     try {
-      await axios.post("http://localhost:4000/api/reviews", formData);
+      await axios.post(`${backendUrl}/api/reviews`, formData);
       setMessage({ type: "success", text: "Review submitted successfully!" });
       setFormData({ name: doctorName, rating: 5, comment: "" });
     } catch (error) {

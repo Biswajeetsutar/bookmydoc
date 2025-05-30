@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useContext } from "react";
+import { AppContext } from "../context/AppContext";
 
 const CustomerRatingSection = () => {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { backendUrl } = useContext(AppContext);
 
   useEffect(() => {
     axios
-      .get("http://localhost:4000/api/reviews")
+      .get(`${backendUrl}/api/reviews`)
       .then((response) => {
         setReviews(response.data);
         setLoading(false);
