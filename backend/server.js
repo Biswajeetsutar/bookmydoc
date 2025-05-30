@@ -16,7 +16,15 @@ connectCloudinary();
 
 // middlewares
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "https://bookmydoc-xi.vercel.app",
+      "https://bookmydoc-admin.vercel.app",
+    ],
+    credentials: true, // if you're using cookies or sessions
+  })
+);
 
 // api endpoints
 app.use("/api/user", userRouter);
